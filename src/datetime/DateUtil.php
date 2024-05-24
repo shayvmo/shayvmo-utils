@@ -10,6 +10,12 @@ namespace Shayvmo\ShayvmoUtil\datetime;
  */
 class DateUtil
 {
+    const COMMON_FULL_FORMAT = "Y-m-d H:i:s";
+
+    const COMMON_DATE_FORMAT = "Y-m-d";
+
+    const COMMON_TIME_FORMAT = "H:i:s";
+
     use DateOffsetUtil, DateDiffUtil;
 
     /**
@@ -32,7 +38,7 @@ class DateUtil
      */
     public static function format(int $timestamp = 0): string
     {
-        return self::date($timestamp)->format("Y-m-d H:i:s");
+        return self::date($timestamp)->format(self::COMMON_FULL_FORMAT);
     }
 
     /**
@@ -41,7 +47,7 @@ class DateUtil
      * @param string $format
      * @return string
      */
-    public static function formatCustom(int $timestamp = 0, string $format = "Y-m-d H:i:s"): string
+    public static function formatCustom(int $timestamp = 0, string $format = self::COMMON_FULL_FORMAT): string
     {
         return self::date($timestamp)->format($format);
     }
@@ -54,7 +60,7 @@ class DateUtil
      */
     public static function formatDate(int $timestamp = 0): string
     {
-        return self::date($timestamp)->format("Y-m-d");
+        return self::date($timestamp)->format(self::COMMON_DATE_FORMAT);
     }
 
     /**
@@ -65,7 +71,7 @@ class DateUtil
      */
     public static function formatTime(int $timestamp = 0): string
     {
-        return self::date($timestamp)->format("H:i:s");
+        return self::date($timestamp)->format(self::COMMON_TIME_FORMAT);
     }
 
     /**
@@ -101,64 +107,36 @@ class DateUtil
     /**
      * 一月的开始，结果：2024-05-01 00:00:00
      * @param string $dateStr 日期格式 2024-05-23 23:59:59
+     * @param string $returnFormat
      * @return string
      */
-    public static function beginOfMonth(string $dateStr): string
+    public static function beginOfMonth(string $dateStr, string $returnFormat = "Y-m-d 00:00:00"): string
     {
-        $dateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $dateStr);
+        $dateTime = \DateTime::createFromFormat(self::COMMON_FULL_FORMAT, $dateStr);
         if ($dateTime === false) {
-            $dateTime = \DateTime::createFromFormat("Y-m-d", $dateStr);
+            $dateTime = \DateTime::createFromFormat(self::COMMON_DATE_FORMAT, $dateStr);
             if ($dateTime === false) {
                 throw new \RuntimeException("日期格式必须是 Y-m-d H:i:s 或 Y-m-d");
             }
         }
-        return $dateTime->format("Y-m-01 00:00:00");
+        return $dateTime->modify("first day of this month")->format($returnFormat);
     }
 
     /**
      * 一月的结束，结果：2024-05-31 23:59:59
      * @param string $dateStr 日期格式 2024-05-23 23:59:59
+     * @param string $returnFormat
      * @return string
      */
-    public static function endOfMonth(string $dateStr): string
+    public static function endOfMonth(string $dateStr, string $returnFormat = "Y-m-d 23:59:59"): string
     {
-        $dateTime = \DateTime::createFromFormat("Y-m-d H:i:s", $dateStr);
+        $dateTime = \DateTime::createFromFormat(self::COMMON_FULL_FORMAT, $dateStr);
         if ($dateTime === false) {
-            $dateTime = \DateTime::createFromFormat("Y-m-d", $dateStr);
+            $dateTime = \DateTime::createFromFormat(self::COMMON_DATE_FORMAT, $dateStr);
             if ($dateTime === false) {
                 throw new \RuntimeException("日期格式必须是 Y-m-d H:i:s 或 Y-m-d");
             }
         }
-        return $dateTime->modify("last day of this month")->format("Y-m-d 23:59:59");
-    }
-
-    /**
-     * 一月的开始，结果：2024-05-01 00:00:00
-     * @param string $dateStr 日期格式 2024-05-23 23:59:59
-     * @param string $format 自定义格式 Y-m-d H:i:s
-     * @return string
-     */
-    public static function beginOfMonthCustom(string $dateStr, string $format): string
-    {
-        $dateTime = \DateTime::createFromFormat($format, $dateStr);
-        if ($dateTime === false) {
-            throw new \RuntimeException("日期格式无法解析");
-        }
-        return $dateTime->format("Y-m-01 00:00:00");
-    }
-
-    /**
-     * 一月的结束，结果：2024-05-31 23:59:59
-     * @param string $dateStr 日期格式 2024-05-23 23:59:59
-     * @param string $format 自定义格式 Y-m-d H:i:s
-     * @return string
-     */
-    public static function endOfMonthCustom(string $dateStr, string $format): string
-    {
-        $dateTime = \DateTime::createFromFormat($format, $dateStr);
-        if ($dateTime === false) {
-            throw new \RuntimeException("日期格式无法解析");
-        }
-        return $dateTime->modify("last day of this month")->format("Y-m-d 23:59:59");
+        return $dateTime->modify("last day of this month")->format($returnFormat);
     }
 }

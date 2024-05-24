@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shayvmo\ShayvmoUtil\datetime;
 
 use Shayvmo\ShayvmoUtil\datetime\constants\DateField;
@@ -19,10 +21,10 @@ trait DateOffsetUtil
      */
     public static function offset(string $dateStr, string $dateField, int $offset): string
     {
-        $format = "Y-m-d H:i:s";
+        $format = DateUtil::COMMON_FULL_FORMAT;
         $dateTime = \DateTime::createFromFormat($format, $dateStr);
         if ($dateTime === false) {
-            $format = "Y-m-d";
+            $format = DateUtil::COMMON_DATE_FORMAT;
             $dateTime = \DateTime::createFromFormat($format, $dateStr);
             if ($dateTime === false) {
                 throw new \RuntimeException("日期格式必须是 Y-m-d H:i:s 或 Y-m-d");
@@ -152,7 +154,7 @@ trait DateOffsetUtil
      * @return string
      * @throws \Exception
      */
-    public static function nextMonth()
+    public static function nextMonth(): string
     {
         return self::offset(DateUtil::format(), DateField::MONTH, 1);
     }
