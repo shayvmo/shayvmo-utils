@@ -4,23 +4,24 @@ namespace Shayvmo\ShayvmoUtil\datetime\constants;
 
 class DateField
 {
-    const YEAR = 1;
+    const YEAR = 'year';
 
-    const MONTH = 2;
+    const MONTH = 'month';
 
-    const DAY = 3;
-    const HOUR = 4;
+    const DAY = 'day';
 
-    const MINUTE = 5;
+    const HOUR = 'hour';
 
-    const SECOND = 6;
+    const MINUTE = 'minute';
+
+    const SECOND = 'second';
 
     /**
      * 获取单位对应文本
-     * @param int $dateField
+     * @param string $dateField
      * @return string
      */
-    public static function getDateFieldText(int $dateField): string
+    public static function getDateFieldText(string $dateField): string
     {
         switch ($dateField) {
             case self::YEAR:

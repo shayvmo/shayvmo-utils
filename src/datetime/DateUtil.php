@@ -10,7 +10,7 @@ namespace Shayvmo\ShayvmoUtil\datetime;
  */
 class DateUtil
 {
-    use DateOffsetUtil;
+    use DateOffsetUtil, DateDiffUtil;
 
     /**
      * 返回DateTime
