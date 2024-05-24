@@ -30,16 +30,16 @@ trait DateDiffUtil
 
         switch ($dateUnit) {
             case DateUnit::WEEK:
-                $diffTimeStr = ceil($diff / 3600 / 24 / 7) . "周";
+                $diffTimeStr = round($diff / 3600 / 24 / 7, 1) . "周";
                 break;
             case DateUnit::DAY:
-                $diffTimeStr = ceil($diff / 3600 / 24) . "天";
+                $diffTimeStr = round($diff / 3600 / 24, 1) . "天";
                 break;
             case DateUnit::HOUR:
-                $diffTimeStr = ceil($diff / 3600) . "小时";
+                $diffTimeStr = round($diff / 3600, 1) . "小时";
                 break;
             case DateUnit::MINUTE:
-                $diffTimeStr = ceil($diff / 60) . "分钟";
+                $diffTimeStr = round($diff / 60, 1) . "分钟";
                 break;
             case DateUnit::SECOND:
                 $diffTimeStr = "{$diff}秒";

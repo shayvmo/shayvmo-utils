@@ -34,7 +34,6 @@ class DateUtil
      * 常规格式化日期时间字符串 Y-m-d H:i:s
      * @param int $timestamp 时间戳
      * @return string
-     * @throws \Exception
      */
     public static function format(int $timestamp = 0): string
     {
@@ -56,7 +55,6 @@ class DateUtil
      * 格式化日期时间字符串 Y-m-d
      * @param int $timestamp 时间戳
      * @return string
-     * @throws \Exception
      */
     public static function formatDate(int $timestamp = 0): string
     {
@@ -67,7 +65,6 @@ class DateUtil
      * 格式化日期时间字符串 H:i:s
      * @param int $timestamp 时间戳
      * @return string
-     * @throws \Exception
      */
     public static function formatTime(int $timestamp = 0): string
     {

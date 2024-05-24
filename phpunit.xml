@@ -1,0 +1,15 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="测试集合">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
+    <!-- 其他配置选项 -->
+</phpunit>
