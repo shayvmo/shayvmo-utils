@@ -25,7 +25,8 @@ class DateUtil
      */
     public static function date(int $timestamp = 0): \DateTime
     {
-        $dateTime = new \DateTime("now");
+        $dateTime = new \DateTime();
+        $dateTime->setTimestamp(time());
         $timestamp > 0 && $dateTime->setTimestamp($timestamp);
         return $dateTime;
     }
