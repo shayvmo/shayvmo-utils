@@ -24,11 +24,11 @@ class Signature
         }
     }
 
-    public function getSignData(array $data, bool $urlEncode = true): array
+    public function getSignData(array $data): array
     {
         !empty($this->appId) && $data['appid'] = $this->appId;
         empty($data['nonce_str']) && $data['nonce_str'] = strtoupper(bin2hex(random_bytes(16)));
-        $content = $this->getContent($data, $urlEncode);
+        $content = $this->getContent($data);
         $data['sign'] = $this->getSign($content);
         return $data;
     }
@@ -38,7 +38,7 @@ class Signature
         return $this->getSign($this->getContent($data, $urlEncode)) === $sign;
     }
 
-    private function getContent(array $data, bool $urlEncode = true): string
+    private function getContent(array $data): string
     {
         ksort($data);
 
@@ -51,11 +51,11 @@ class Signature
             if (is_array($item)) {
                 foreach ($item as $k => $v) {
                     if (!is_array($v)) {
-                        $temp[] = trim("{$key}[{$k}]=". $urlEncode ? urlencode((string)$v) : $v);
+                        $temp[] = trim("{$key}[{$k}]=". urlencode((string)$v));
                     }
                 }
             } else {
-                $temp[] = trim($key .'='. $urlEncode ? urlencode((string)$item) : $item);
+                $temp[] = trim($key .'='. urlencode((string)$item));
             }
         }
 
