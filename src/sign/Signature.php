@@ -24,21 +24,21 @@ class Signature
         }
     }
 
-    public function getSignData(array $data, bool $urlEncode = false): array
+    public function getSignData(array $data, bool $urlEncode = true): array
     {
         !empty($this->appId) && $data['appid'] = $this->appId;
-        $data['nonce_str'] = strtoupper(bin2hex(random_bytes(16)));
+        empty($data['nonce_str']) && $data['nonce_str'] = strtoupper(bin2hex(random_bytes(16)));
         $content = $this->getContent($data, $urlEncode);
         $data['sign'] = $this->getSign($content);
         return $data;
     }
 
-    public function checkSign(array $data, string $sign, bool $urlEncode = false): bool
+    public function checkSign(array $data, string $sign, bool $urlEncode = true): bool
     {
         return $this->getSign($this->getContent($data, $urlEncode)) === $sign;
     }
 
-    private function getContent(array $data, bool $urlEncode = false): string
+    private function getContent(array $data, bool $urlEncode = true): string
     {
         ksort($data);
 
